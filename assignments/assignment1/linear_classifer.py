@@ -15,7 +15,9 @@ def softmax(predictions):
     '''
     # TODO implement softmax
     # Your final implementation shouldn't have any loops
-    raise Exception("Not implemented!")
+    predictions -= max(predictions)
+    softmax = np.exp(predictions) / np.sum(np.exp(predictions))
+    return softmax
 
 
 def cross_entropy_loss(probs, target_index):
@@ -33,7 +35,10 @@ def cross_entropy_loss(probs, target_index):
     '''
     # TODO implement cross-entropy
     # Your final implementation shouldn't have any loops
-    raise Exception("Not implemented!")
+    target_masks = np.zeros(probs.shape)
+    target_masks[target_index] = 1
+    loss = -np.sum(target_masks * np.log(probs))
+    return loss
 
 
 def softmax_with_cross_entropy(predictions, target_index):
@@ -53,8 +58,10 @@ def softmax_with_cross_entropy(predictions, target_index):
     '''
     # TODO implement softmax with cross-entropy
     # Your final implementation shouldn't have any loops
-    raise Exception("Not implemented!")
-
+    
+    probs = softmax(predictions)
+    loss = cross_entropy_loss(probs, target_index)
+    dprediction = probs
     return loss, dprediction
 
 
